@@ -23,7 +23,13 @@ export const taskSlice = createSlice({
   initialState,
 
   // Los reducers vamos a crear funciones para actualizar el estado
-  reducers: {}
+  reducers: {
+    addTask: (state, action) => {
+      console.log(state, action)
+    }
+  }
 })
+// Esto sirve para acceder a esta funcion desde cualquier parte de mi aplicacion
+export const {addTask} = taskSlice.actions
 
 export default taskSlice.reducer

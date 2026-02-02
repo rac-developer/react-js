@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import {addTask} from "../features/tasks/taskSlice"
 
 const TaskForm = () => {
   
@@ -7,13 +9,26 @@ const TaskForm = () => {
     description: ""
   })
 
+  const dispatch = useDispatch()
+
+
   const handleChange = (e) => {
-    console.log(e.target.name, e.target.value)
+    // title: "hola mundo"
+    setTask({
+      ...task,
+      [e.target.name]: e.target.value
+    })
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(addTask('mi parametro'))
+  }
+
 
   return (
     <div>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <input name="title" type="text" placeholder="title" onChange={handleChange}/>
         <textarea name="description" placeholder="description" onChange={handleChange}></textarea>
         <button>Save</button>
