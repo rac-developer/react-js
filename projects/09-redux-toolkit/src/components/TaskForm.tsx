@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import {addTask} from "../features/tasks/taskSlice"
+import {v4 as uuid} from 'uuid'
 
 const TaskForm = () => {
   
@@ -10,7 +11,6 @@ const TaskForm = () => {
   })
 
   const dispatch = useDispatch()
-
 
   const handleChange = (e) => {
     // title: "hola mundo"
@@ -22,7 +22,11 @@ const TaskForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(addTask('mi parametro'))
+    dispatch(addTask({
+      ...task,
+      // Esto agrega un id unico a cada task
+      id: uuid()
+    }))
   }
 
 

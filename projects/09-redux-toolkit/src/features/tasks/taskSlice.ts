@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
 
-
 const initialState = [
   {
     id: "1",
@@ -25,7 +24,9 @@ export const taskSlice = createSlice({
   // Los reducers vamos a crear funciones para actualizar el estado
   reducers: {
     addTask: (state, action) => {
-      console.log(state, action)
+      console.log(state, action.type, action.payload)
+      // Aqui  añadimos un objecto dentro del arreglo, aun que en react no usamos mucho el metodo de push. Este es un meetodo de javascript
+      state.push(action.payload)
     }
   }
 })
