@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import {addTask} from "../features/tasks/taskSlice"
 import {v4 as uuid} from 'uuid'
+import {useNavigate} from 'react-router'
 
 const TaskForm = () => {
   
@@ -11,6 +12,9 @@ const TaskForm = () => {
   })
 
   const dispatch = useDispatch()
+  // Este hook nos permite cambiar de pagina
+  const navigate = useNavigate()
+
 
   const handleChange = (e) => {
     // title: "hola mundo"
@@ -21,12 +25,13 @@ const TaskForm = () => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(addTask({
       ...task,
       // Esto agrega un id unico a cada task
       id: uuid()
     }))
+    navigate("/")
   }
 
 
