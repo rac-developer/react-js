@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import {addTask} from "../features/tasks/taskSlice"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import {addTask, editTask} from "../features/tasks/taskSlice"
 import {v4 as uuid} from 'uuid'
-import {useNavigate} from 'react-router'
+import {useNavigate, useParams} from 'react-router'
 
 const TaskForm = () => {
   
@@ -14,7 +14,8 @@ const TaskForm = () => {
   const dispatch = useDispatch()
   // Este hook nos permite cambiar de pagina
   const navigate = useNavigate()
-
+  const params = useParams()
+  const tasks = useSelector((state) => state.tasks)
 
   const handleChange = (e) => {
     // title: "hola mundo"
@@ -26,20 +27,43 @@ const TaskForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTask({
-      ...task,
-      // Esto agrega un id unico a cada task
-      id: uuid()
-    }))
-    navigate("/")
+
+    if(params.id) {
+      dispatch(editTask(task))
+    } else {
+      dispatch(addTask({
+        ...task,
+        // Esto agrega un id unico a cada task
+        id: uuid()
+      }))
+      navigate("/");
+    }
   }
 
+  useEffect(() => {
+    if(params.id) {
+      setTask(
+        tasks.find((task) => task.id === params.id)
+      )
+     }
+  }, [])
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input name="title" type="text" placeholder="title" onChange={handleChange}/>
-        <textarea name="description" placeholder="description" onChange={handleChange}></textarea>
+        <input 
+          name="title" 
+          type="text" 
+          placeholder="title" 
+          onChange={handleChange}
+          value={task.title}
+        />
+        <textarea 
+          name="description" 
+          placeholder="description" 
+          onChange={handleChange}
+          value={task.description}
+        ></textarea>
         <button>Save</button>
       </form>
     </div>

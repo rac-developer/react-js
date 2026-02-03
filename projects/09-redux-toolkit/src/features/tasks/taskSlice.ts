@@ -28,11 +28,18 @@ export const taskSlice = createSlice({
       // Aqui  añadimos un objecto dentro del arreglo, aun que en react no usamos mucho el metodo de push. Este es un meetodo de javascript
       state.push(action.payload)
     },
+    editTask: (state, action) => {
+      const {id, title, description} = action.payload
+      const foundTask = state.find(task => task.id === id)
+      if (foundTask) {
+        foundTask.title = title
+        foundTask.description = description
+      }
+    },
     deleteTask: (state, action) => {
       console.log(action, action.payload)
       const taskFound = state.find(task => task.id === action.payload)
       console.log(taskFound)
-      // Esta condicion lo que hace es 
       if(taskFound) {
         /* state.indexOf(taskfound): Eliminacion por indice, busca la posicio numerica (el indice) de ese objecto dentro del array
         .splice(indice, 1): Esta es la funcion que "recorta" el array. Le dice: "Ve a esta posicion y elimina 1 elemento"
@@ -43,6 +50,6 @@ export const taskSlice = createSlice({
   }
 })
 // Esto sirve para acceder a esta funcion desde cualquier parte de mi aplicacion
-export const { addTask, deleteTask } = taskSlice.actions
+export const { addTask, deleteTask, editTask } = taskSlice.actions
 
 export default taskSlice.reducer
