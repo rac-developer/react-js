@@ -32,7 +32,11 @@ export const taskSlice = createSlice({
       console.log(action, action.payload)
       const taskFound = state.find(task => task.id === action.payload)
       console.log(taskFound)
+      // Esta condicion lo que hace es 
       if(taskFound) {
+        /* state.indexOf(taskfound): Eliminacion por indice, busca la posicio numerica (el indice) de ese objecto dentro del array
+        .splice(indice, 1): Esta es la funcion que "recorta" el array. Le dice: "Ve a esta posicion y elimina 1 elemento"
+        */
         state.splice(state.indexOf(taskFound), 1)
       }
     }
