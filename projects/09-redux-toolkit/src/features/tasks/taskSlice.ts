@@ -27,10 +27,18 @@ export const taskSlice = createSlice({
       console.log(state, action.type, action.payload)
       // Aqui  añadimos un objecto dentro del arreglo, aun que en react no usamos mucho el metodo de push. Este es un meetodo de javascript
       state.push(action.payload)
+    },
+    deleteTask: (state, action) => {
+      console.log(action, action.payload)
+      const taskFound = state.find(task => task.id === action.payload)
+      console.log(taskFound)
+      if(taskFound) {
+        state.splice(state.indexOf(taskFound), 1)
+      }
     }
   }
 })
 // Esto sirve para acceder a esta funcion desde cualquier parte de mi aplicacion
-export const {addTask} = taskSlice.actions
+export const { addTask, deleteTask } = taskSlice.actions
 
 export default taskSlice.reducer
